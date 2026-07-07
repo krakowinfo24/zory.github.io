@@ -1,729 +1,108 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zory – Aktualności z Zory</title>
-    <meta name="description" content="Najnowsze aktualności, wiadomości lokalne i informacje z Zory. Zory – Twój lokalny serwis informacyjny.">
-    <meta name="keywords" content="Zory, wiadomości Zory, aktualności Zory, lokalny serwis informacyjny">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --primary: #0d3b6e;
-            --primary-light: #1a5276;
-            --accent: #c0392b;
-            --text: #1a1a1a;
-            --text-muted: #6c757d;
-            --bg: #f4f5f7;
-            --white: #ffffff;
-            --border: #dde1e7;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: var(--bg);
-            color: var(--text);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        a:hover { color: var(--accent); }
-        img { max-width: 100%; display: block; }
-
-        /* TOP BAR */
-        .topbar {
-            background: var(--primary);
-            color: rgba(255,255,255,0.75);
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            padding: 6px 0;
-        }
-        .topbar-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .topbar a { color: rgba(255,255,255,0.75); }
-        .topbar a:hover { color: #fff; }
-
-        /* HEADER */
-        header {
-            background: var(--white);
-            border-bottom: 3px solid var(--primary);
-            padding: 18px 0 12px;
-        }
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .logo {
-            display: flex;
-            flex-direction: column;
-        }
-        .logo-name {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
-            font-family: Arial, sans-serif;
-            line-height: 1;
-        }
-        .logo-name span { color: var(--accent); }
-        .logo-tagline {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: Arial, sans-serif;
-            margin-top: 3px;
-            letter-spacing: 0.5px;
-        }
-        .header-date {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: right;
-        }
-
-        /* NAV */
-        nav {
-            background: var(--primary);
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            gap: 0;
-        }
-        nav a {
-            color: rgba(255,255,255,0.9);
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 12px 18px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            border-right: 1px solid rgba(255,255,255,0.1);
-            transition: background 0.2s;
-        }
-        nav a:hover, nav a.active {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        /* BREAKING NEWS */
-        .breaking {
-            background: var(--accent);
-            color: #fff;
-            padding: 8px 0;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-        }
-        .breaking-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .breaking-label {
-            background: rgba(0,0,0,0.25);
-            padding: 2px 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 11px;
-            white-space: nowrap;
-            letter-spacing: 0.5px;
-        }
-        .breaking-text { overflow: hidden; }
-
-        /* MAIN LAYOUT */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px 20px;
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 28px;
-        }
-
-        /* SECTION HEADING */
-        .section-heading {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 6px;
-            margin-bottom: 18px;
-        }
-
-        /* FEATURED ARTICLE */
-        .featured {
-            background: var(--white);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 24px;
-        }
-        .featured-img {
-            width: 100%;
-            height: 380px;
-            background: linear-gradient(135deg, #1a3a5c 0%, #2e86c1 60%, #1a5276 100%);
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-        }
-        .featured-img-label {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: var(--accent);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            letter-spacing: 0.5px;
-        }
-        .featured-img-overlay {
-            width: 100%;
-            padding: 28px 28px 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-        }
-        .featured-body { padding: 22px 28px 26px; }
-        .featured-category {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--accent);
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-        .featured-title {
-            font-size: 26px;
-            font-weight: 900;
-            line-height: 1.25;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-        .featured-excerpt {
-            font-size: 16px;
-            color: var(--text-muted);
-            line-height: 1.65;
-            margin-bottom: 16px;
-        }
-        .featured-meta {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: var(--text-muted);
-            display: flex;
-            gap: 16px;
-        }
-
-        /* ARTICLE GRID */
-        .articles-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-bottom: 24px;
-        }
-        .article-card {
-            background: var(--white);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-        }
-        .article-card-img {
-            width: 100%;
-            height: 160px;
-            position: relative;
-        }
-        .article-card-img-bg {
-            width: 100%;
-            height: 100%;
-        }
-        .article-card-body { padding: 16px; flex: 1; }
-        .article-card-category {
-            font-family: Arial, sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--accent);
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-        .article-card-title {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.35;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-        .article-card-title:hover { color: var(--accent); }
-        .article-card-meta {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: auto;
-            padding-top: 8px;
-        }
-
-        /* MORE ARTICLES */
-        .more-articles { margin-bottom: 8px; }
-        .more-article-item {
-            background: var(--white);
-            border-radius: 4px;
-            box-shadow: var(--card-shadow);
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-        .more-article-num {
-            font-family: Arial, sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--border);
-            line-height: 1;
-            min-width: 32px;
-        }
-        .more-article-title {
-            font-size: 15px;
-            font-weight: 700;
-            line-height: 1.35;
-            color: var(--text);
-        }
-        .more-article-title:hover { color: var(--accent); }
-        .more-article-meta {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* SIDEBAR */
-        .sidebar {}
-        .sidebar-widget {
-            background: var(--white);
-            border-radius: 4px;
-            box-shadow: var(--card-shadow);
-            padding: 20px;
-            margin-bottom: 22px;
-        }
-        .sidebar-widget-title {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 8px;
-            margin-bottom: 16px;
-        }
-        .sidebar-news-item {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .sidebar-news-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .sidebar-news-title {
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.35;
-            margin-bottom: 4px;
-        }
-        .sidebar-news-title:hover { color: var(--accent); }
-        .sidebar-news-meta {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .sidebar-img {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #0d3b6e, #2980b9);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: rgba(255,255,255,0.6);
-        }
-        .about-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-        .weather-widget {
-            text-align: center;
-        }
-        .weather-city {
-            font-family: Arial, sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        .weather-temp {
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--primary);
-            line-height: 1;
-            font-family: Arial, sans-serif;
-        }
-        .weather-desc {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-        .weather-icon { font-size: 36px; margin-bottom: 4px; }
-
-        /* FOOTER */
-        footer {
-            background: var(--primary);
-            color: rgba(255,255,255,0.8);
-            padding: 40px 0 20px;
-            margin-top: 20px;
-        }
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            margin-bottom: 20px;
-        }
-        .footer-logo {
-            font-family: Arial, sans-serif;
-            font-size: 22px;
-            font-weight: 900;
-            color: #fff;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .footer-logo span { color: var(--accent); }
-        .footer-desc {
-            font-size: 13px;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.65);
-        }
-        .footer-col-title {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #fff;
-            margin-bottom: 14px;
-        }
-        .footer-links { list-style: none; }
-        .footer-links li {
-            padding: 4px 0;
-            font-size: 13px;
-        }
-        .footer-links a {
-            color: rgba(255,255,255,0.65);
-        }
-        .footer-links a:hover { color: #fff; }
-        .footer-bottom {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: rgba(255,255,255,0.45);
-            text-align: center;
-        }
-
-        /* COLOR PALETTES FOR ARTICLE IMGS */
-        .img-blue   { background: linear-gradient(135deg, #1a3a5c 0%, #2e86c1 100%); }
-        .img-green  { background: linear-gradient(135deg, #1e6b3e 0%, #27ae60 100%); }
-        .img-purple { background: linear-gradient(135deg, #4a235a 0%, #8e44ad 100%); }
-        .img-orange { background: linear-gradient(135deg, #784212 0%, #e67e22 100%); }
-        .img-teal   { background: linear-gradient(135deg, #0e5460 0%, #1abc9c 100%); }
-        .img-red    { background: linear-gradient(135deg, #6e0d0d 0%, #c0392b 100%); }
-
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .articles-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-            nav a { padding: 10px 12px; font-size: 12px; }
-            .featured-img { height: 240px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Podróże po Polsce i Europie</title>
+<style>
+    body {
+        font-family: 'Georgia', serif;
+        background-color: #f4f1ea;
+        color: #2c3e50;
+        margin: 0;
+        padding: 0;
+        line-height: 1.7;
+    }
+    header {
+        background: linear-gradient(135deg, #34495e, #2c3e50);
+        color: #fff;
+        padding: 40px 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+        margin: 0;
+        font-size: 2.8em;
+        letter-spacing: 1px;
+    }
+    main {
+        max-width: 960px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    h2 {
+        color: #c0392b;
+        border-bottom: 2px solid #e67e22;
+        padding-bottom: 8px;
+        margin-top: 35px;
+        font-size: 1.8em;
+    }
+    p {
+        text-align: justify;
+        margin-bottom: 15px;
+        font-size: 1.05em;
+    }
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        margin-top: 40px;
+        font-size: 0.9em;
+    }
+    .intro {
+        font-style: italic;
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 4px solid #f1c40f;
+        border-radius: 4px;
+    }
+</style>
 </head>
 <body>
 
-<div class="topbar">
-    <div class="topbar-inner">
-        <span id="topbar-date">Poniedziałek, 23 czerwca 2025</span>
-        <span>
-            <a href="#">Kontakt</a> &nbsp;|&nbsp;
-            <a href="#">Newsletter</a> &nbsp;|&nbsp;
-            <a href="#">Reklama</a>
-        </span>
-    </div>
-</div>
-
 <header>
-    <div class="header-inner">
-        <div class="logo">
-            <a href="/">
-                <div class="logo-name">Zory<span></span></div>
-                <div class="logo-tagline">Lokalny serwis informacyjny &bull; Zory</div>
-            </a>
-        </div>
-        <div class="header-date" id="header-date">
-            Twój lokalny portal informacyjny
-        </div>
-    </div>
+    <h1>Podróże po Polsce i Europie – odkryj piękno Starego Kontynentu</h1>
+<p><a href="https://krakowinfo24.github.io/chelm.github.io/">krakowinfo24.github.io/chelm.github.io/</a></p>
 </header>
 
-<nav>
-    <div class="nav-inner">
-        <a href="#" class="active">Aktualności</a>
-        <a href="#">Miasto</a>
-        <a href="#">Sport</a>
-        <a href="#">Kultura</a>
-        <a href="#">Gospodarka</a>
-        <a href="#">Społeczeństwo</a>
-        <a href="#">Kontakt</a>
-    </div>
-</nav>
+<main>
+    <p class="intro">Podróżowanie to jedna z najpiękniejszych form poznawania świata. Pozwala nam poszerzać horyzonty, zanurzać się w innych kulturach, próbować nieznanych smaków oraz odkrywać miejsca, które na zawsze pozostają w naszej pamięci. Polska i Europa oferują niewyobrażalne bogactwo krajobrazów, zabytków i tradycji, które warto poznać osobiście.</p>
+<p><a href="https://dziennikzamosc.pl">dziennikzamosc.pl</a></p>
 
-<div class="breaking">
-    <div class="breaking-inner">
-        <span class="breaking-label">Pilne</span>
-        <span class="breaking-text">Burmistrz Zory ogłasza nowe inwestycje w infrastrukturę miejską &nbsp;•&nbsp; Wyniki wyborów do Rady Miejskiej &nbsp;•&nbsp; Nowy rok szkolny – zmiany w organizacji ruchu przy szkołach</span>
-    </div>
-</div>
+    <h2>Polska – kraj różnorodności krajobrazowej i kulturowej</h2>
+    <p>Polska to kraj, który zaskakuje na każdym kroku. Od bałtyckich plaż na północy, przez malownicze Mazury pełne jezior, po majestatyczne Tatry na południu – nasza ojczyzna oferuje krajobrazy dla każdego miłośnika przyrody. Wybrzeże Bałtyku z jego szerokimi, piaszczystymi plażami w Międzyzdrojach, Sopocie czy Łebie przyciąga turystów szukających morskiej bryzy i wyciszenia. Ruchome wydmy w Słowińskim Parku Narodowym są prawdziwym fenomenem przyrodniczym, jedynym takim miejscem w Europie.</p>
+    <p>Kraina Wielkich Jezior Mazurskich to raj dla żeglarzy, kajakarzy i wędkarzy. Rejsy po jeziorach Śniardwy i Mamry, spływy kajakowe Krutynią czy wieczory przy ognisku pośród szumu lasów pozostają w pamięci na długo. Z kolei południe Polski to góry – Tatry z Morskim Okiem i Doliną Kościeliską, Bieszczady z ich dzikością i połoninami, a także Sudety pełne tajemniczych miejsc, takich jak Szczeliniec Wielki czy Śnieżka.</p>
+<p><a href="https://krakowinfo24.github.io/legnica.github.io/">krakowinfo24.github.io/legnica.github.io/</a></p>
+    <p>Nie sposób nie wspomnieć o polskich miastach, z których każde ma własną duszę. Kraków urzeka średniowiecznymi uliczkami, Wawelem i Rynkiem Głównym – jednym z największych placów miejskich w Europie. Warszawa łączy odbudowaną starówkę z nowoczesną architekturą wieżowców, tworząc unikalną mieszankę historii i nowoczesności. Wrocław zachwyca setkami krasnali, Ostrowem Tumskim i wyspami na Odrze. Gdańsk zaś odsłania hanzeatycką przeszłość w kolorowych kamienicach przy Długim Targu.</p>
 
-<div class="container">
-    <!-- MAIN CONTENT -->
-    <main>
-        <div class="section-heading">Najważniejsze</div>
+    <h2>Zachodnia Europa – klasyczne kierunki turystyczne</h2>
+    <p>Zachodnia część Europy od wieków przyciąga podróżników bogactwem kultury, sztuki i historii. Paryż – stolica Francji – to marzenie wielu osób. Wieża Eiffla, Luwr, Katedra Notre-Dame, romantyczne uliczki Montmartre'u i wieczory nad Sekwaną tworzą atmosferę, której nie da się z niczym porównać. Francuska kuchnia, od croissantów po wykwintne dania z ratatouille i bœuf bourguignon, jest sztuką samą w sobie.</p>
+    <p>Włochy to kolejny kraj, który zachwyca na każdym kroku. Rzym, Wieczne Miasto, oferuje podróż w czasie – Koloseum, Forum Romanum, Watykan z Bazyliką Świętego Piotra i Kaplicą Sykstyńską to obowiązkowe punkty każdej wyprawy. Wenecja z gondolami i Placem Świętego Marka, Florencja jako kolebka renesansu z Galerią Uffizi i Katedrą Santa Maria del Fiore, oraz słoneczna Toskania z winnicami i cyprysowymi alejami – to obrazy, które budzą tęsknotę za powrotem.</p>
+    <p>Hiszpania oferuje coś dla każdego – od zabytkowej Barcelony z niesamowitą architekturą Gaudiego, przez tętniący życiem Madryt, po plaże Costa del Sol i Wysp Kanaryjskich. Wieczorne tapas, flamenco i sjesta to elementy kultury, które warto poczuć osobiście. Niemcy z kolei zaskakują różnorodnością – Berlin pełen historii i sztuki współczesnej, bawarskie Alpy z zamkiem Neuschwanstein oraz Dolina Renu z winnicami i średniowiecznymi zamkami.</p>
 
-        <article class="featured">
-            <div class="featured-img img-blue">
-                <div class="featured-img-label">Wyróżnione</div>
-                <div class="featured-img-overlay"></div>
-            </div>
-            <div class="featured-body">
-                <div class="featured-category">Miasto &bull; Aktualności</div>
-                <h1 class="featured-title"><a href="#">Wielka modernizacja centrum Zory – znamy szczegóły nowego projektu rewitalizacji</a></h1>
-                <p class="featured-excerpt">Władze miasta przedstawiły ambitny plan przebudowy ścisłego centrum. Projekt obejmuje remont chodników, nowe nasadzenia zieleni, modernizację oświetlenia oraz budowę stref rekreacyjnych. Prace mają ruszyć wiosną przyszłego roku i potrwać do końca 2026.</p>
-                <div class="featured-meta">
-                    <span>23 czerwca 2025</span>
-                    <span>Redakcja Zory</span>
-                    <span>5 min czytania</span>
-                </div>
-            </div>
-        </article>
+    <h2>Europa Środkowa i Wschodnia – ukryte perły</h2>
+<p><a href="https://zyciezmalymdzieckiem.pl">zyciezmalymdzieckiem.pl</a></p>
+    <p>Europa Środkowo-Wschodnia to region, który wciąż pozostaje niedoceniany, choć oferuje niesamowite atrakcje przy stosunkowo niskich kosztach podróży. Praga, stolica Czech, uważana jest za jedno z najpiękniejszych miast Europy. Most Karola, Zamek Praski, Stare Miasto z zegarem astronomicznym i klimatyczne piwiarnie sprawiają, że wielu turystów wraca tam wielokrotnie.</p>
+    <p>Budapeszt – „perła Dunaju” – to miasto podzielone rzeką na Budę i Peszt, słynące z zabytkowych łaźni termalnych, imponującego Parlamentu oraz Zamku Królewskiego. Węgierska kuchnia z gulaszem, paprykaszem i winem tokajskim rozpieszcza kubki smakowe. Wiedeń, choć bardziej zachodni w charakterze, oczarowuje pałacem Schönbrunn, kawiarnianą tradycją i koncertami muzyki klasycznej.</p>
+<p><a href="https://dziennikpoznan.pl">dziennikpoznan.pl</a></p>
+    <p>Warto również odkrywać kraje bałtyckie – Litwę, Łotwę i Estonię. Wilno z barokowym starym miastem, Ryga z secesyjną architekturą oraz Tallinn z średniowieczną panoramą i nowoczesnymi dzielnicami technologicznymi to kierunki, które łączą historię z nowoczesnością. Chorwacja z jej wybrzeżem Adriatyku, Parkiem Narodowym Plitwickich Jezior i starym miastem w Dubrowniku stała się w ostatnich latach jednym z najpopularniejszych kierunków wakacyjnych Europejczyków.</p>
+<p><a href="https://gazetakielce.pl">gazetakielce.pl</a></p>
 
-        <div class="section-heading">Wiadomości lokalne</div>
-
-        <div class="articles-grid">
-            <article class="article-card">
-                <div class="article-card-img">
-                    <div class="article-card-img-bg img-green" style="height:160px;"></div>
-                </div>
-                <div class="article-card-body">
-                    <div class="article-card-category">Sport</div>
-                    <h2 class="article-card-title"><a href="#">Lokalna drużyna awansuje do wyższej ligi – mieszkańcy świętują sukces</a></h2>
-                    <div class="article-card-meta">22 czerwca 2025 &bull; Sport</div>
-                </div>
-            </article>
-
-            <article class="article-card">
-                <div class="article-card-img">
-                    <div class="article-card-img-bg img-purple" style="height:160px;"></div>
-                </div>
-                <div class="article-card-body">
-                    <div class="article-card-category">Kultura</div>
-                    <h2 class="article-card-title"><a href="#">Festiwal Kulturalny Zory 2025 – program i bilety już dostępne</a></h2>
-                    <div class="article-card-meta">21 czerwca 2025 &bull; Kultura</div>
-                </div>
-            </article>
-
-            <article class="article-card">
-                <div class="article-card-img">
-                    <div class="article-card-img-bg img-orange" style="height:160px;"></div>
-                </div>
-                <div class="article-card-body">
-                    <div class="article-card-category">Gospodarka</div>
-                    <h2 class="article-card-title"><a href="#">Nowe miejsca pracy w Zory – duży inwestor wchodzi na rynek lokalny</a></h2>
-                    <div class="article-card-meta">20 czerwca 2025 &bull; Gospodarka</div>
-                </div>
-            </article>
-
-            <article class="article-card">
-                <div class="article-card-img">
-                    <div class="article-card-img-bg img-teal" style="height:160px;"></div>
-                </div>
-                <div class="article-card-body">
-                    <div class="article-card-category">Społeczeństwo</div>
-                    <h2 class="article-card-title"><a href="#">Nowe ścieżki rowerowe w Zory – kiedy otwarcie i gdzie przebiegają?</a></h2>
-                    <div class="article-card-meta">19 czerwca 2025 &bull; Społeczeństwo</div>
-                </div>
-            </article>
-        </div>
-
-        <div class="section-heading">Więcej wiadomości</div>
-
-        <div class="more-articles">
-            <div class="more-article-item">
-                <div class="more-article-num">1</div>
-                <div>
-                    <div class="more-article-title"><a href="#">Przebudowa ul. Głównej w Zory – utrudnienia w ruchu przez kolejne tygodnie</a></div>
-                    <div class="more-article-meta">23 czerwca 2025 &bull; Miasto</div>
-                </div>
-            </div>
-            <div class="more-article-item">
-                <div class="more-article-num">2</div>
-                <div>
-                    <div class="more-article-title"><a href="#">Szkoły w Zory podsumowują rok szkolny 2024/2025 – wyniki i statystyki</a></div>
-                    <div class="more-article-meta">22 czerwca 2025 &bull; Edukacja</div>
-                </div>
-            </div>
-            <div class="more-article-item">
-                <div class="more-article-num">3</div>
-                <div>
-                    <div class="more-article-title"><a href="#">Jarmark Letni na Rynku – tłumy mieszkańców na corocznej imprezie</a></div>
-                    <div class="more-article-meta">21 czerwca 2025 &bull; Kultura</div>
-                </div>
-            </div>
-            <div class="more-article-item">
-                <div class="more-article-num">4</div>
-                <div>
-                    <div class="more-article-title"><a href="#">Zmiany w rozkładzie jazdy autobusów miejskich od 1 lipca 2025</a></div>
-                    <div class="more-article-meta">20 czerwca 2025 &bull; Komunikacja</div>
-                </div>
-            </div>
-            <div class="more-article-item">
-                <div class="more-article-num">5</div>
-                <div>
-                    <div class="more-article-title"><a href="#">Nowe oblicze Parku Miejskiego – zakończono remont i otwarcie dla zwiedzających</a></div>
-                    <div class="more-article-meta">18 czerwca 2025 &bull; Miasto</div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-widget">
-            <div class="sidebar-widget-title">Popularne dziś</div>
-            <div class="sidebar-news-item">
-                <div class="sidebar-news-title"><a href="#">Wyniki matur 2025 – jak wypadli uczniowie z Zory?</a></div>
-                <div class="sidebar-news-meta">23 czerwca 2025</div>
-            </div>
-            <div class="sidebar-news-item">
-                <div class="sidebar-news-title"><a href="#">Targi pracy w Zory – setki ofert dla bezrobotnych</a></div>
-                <div class="sidebar-news-meta">22 czerwca 2025</div>
-            </div>
-            <div class="sidebar-news-item">
-                <div class="sidebar-news-title"><a href="#">Nowe połączenie kolejowe z Zory do Warszawy</a></div>
-                <div class="sidebar-news-meta">21 czerwca 2025</div>
-            </div>
-            <div class="sidebar-news-item">
-                <div class="sidebar-news-title"><a href="#">Pożar w centrum – straż pożarna szybko opanowała ogień</a></div>
-                <div class="sidebar-news-meta">20 czerwca 2025</div>
-            </div>
-        </div>
-
-        <div class="sidebar-widget weather-widget">
-            <div class="sidebar-widget-title">Pogoda w Zory</div>
-            <div class="weather-icon">⛅</div>
-            <div class="weather-city">Zory</div>
-            <div class="weather-temp">21°C</div>
-            <div class="weather-desc">Częściowe zachmurzenie &bull; Poniedziałek</div>
-        </div>
-
-        <div class="sidebar-widget">
-            <div class="sidebar-widget-title">O nas</div>
-            <div class="sidebar-img">Zory</div>
-            <p class="about-text">Zory to niezależny lokalny serwis informacyjny poświęcony wiadomościom z Zory i regionu. Dostarczamy rzetelne informacje dla mieszkańców od 2020 roku.</p>
-        </div>
-
-        <div class="sidebar-widget">
-            <div class="sidebar-widget-title">Kontakt</div>
-            <div style="font-size:13px; color: var(--text-muted); line-height:2;">
-                <div>📧 redakcja@zory.github.io</div>
-                <div>📞 +48 34 XXX XX XX</div>
-                <div>📍 Zory, ul. Redakcyjna 1</div>
-            </div>
-        </div>
-    </aside>
-</div>
+    <h2>Praktyczne wskazówki dla podróżników</h2>
+    <p>Planowanie podróży to sztuka, którą warto opanować, aby wyjazd był udany i pozbawiony niepotrzebnego stresu. Przede wszystkim warto z wyprzedzeniem rezerwować bilety lotnicze i noclegi – ceny często rosną wraz ze zbliżającym się terminem wyjazdu. Podróżując po strefie Schengen, nie musimy martwić się o kontrole graniczne, jednak zawsze warto mieć przy sobie ważny dokument tożsamości.</p>
+    <p>Podróżowanie pociągiem po Europie to doskonała alternatywa dla samolotu. Bilety Interrail pozwalają zwiedzić wiele krajów w atrakcyjnej cenie, a jednocześnie podziwiać krajobrazy zza okna. Warto również rozważyć podróże autobusowe – firmy takie jak FlixBus oferują tanie połączenia między największymi miastami kontynentu. Dla miłośników niezależności doskonałym rozwiązaniem jest wynajem samochodu, szczególnie w krajach takich jak Włochy, Hiszpania czy Chorwacja, gdzie wiele atrakcji położonych jest z dala od centrów.</p>
+<p><a href="https://nvsk.lv">nvsk.lv</a></p>
+    <p>Nie zapominajmy o ubezpieczeniu podróżnym, karcie EKUZ w krajach Unii Europejskiej oraz o dostosowaniu bagażu do klimatu i planowanych aktywności. Podróżowanie z lekkim plecakiem daje ogromną swobodę, a wiele wspaniałych miejsc najlepiej zwiedza się pieszo, chłonąc atmosferę miasta wszystkimi zmysłami. Rozmowa z lokalnymi mieszkańcami, próbowanie regionalnych potraw i odkrywanie mniej znanych zakątków to esencja prawdziwego podróżowania.</p>
+<p><a href="https://wnetrzadomu.pl">wnetrzadomu.pl</a></p>
+    <p>Podróże – zarówno te po Polsce, jak i po Europie – uczą nas otwartości, tolerancji i szacunku dla różnorodności. Każda wyprawa to nowa lekcja i niezapomniane wspomnienia. Warto ruszyć w drogę, nawet jeśli tylko na weekendową wycieczkę – bo świat czeka, aby zostać odkryty.</p>
+</main>
 
 <footer>
-    <div class="footer-inner">
-        <div class="footer-grid">
-            <div>
-                <div class="footer-logo">Zory<span></span></div>
-                <p class="footer-desc">Lokalny serwis informacyjny Zory. Najnowsze wiadomości, aktualności lokalne, sport, kultura i gospodarka. Bądź na bieżąco z tym, co dzieje się w Twoim mieście.</p>
-            </div>
-            <div>
-                <div class="footer-col-title">Działy</div>
-                <ul class="footer-links">
-                    <li><a href="#">Aktualności</a></li>
-                    <li><a href="#">Miasto</a></li>
-                    <li><a href="#">Sport</a></li>
-                    <li><a href="#">Kultura</a></li>
-                    <li><a href="#">Gospodarka</a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-col-title">Informacje</div>
-                <ul class="footer-links">
-                    <li><a href="#">O redakcji</a></li>
-                    <li><a href="#">Kontakt</a></li>
-                    <li><a href="#">Reklama</a></li>
-                    <li><a href="#">Polityka prywatności</a></li>
-                    <li><a href="#">Regulamin</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; <span id="footer-year">2025</span> Zory. Wszelkie prawa zastrzeżone.
-        </div>
-    </div>
+    &copy; 2024 Podróże po Polsce i Europie – inspiracje dla każdego globtrotera
 </footer>
-
-<script>
-    const now = new Date();
-    const days = ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
-    const months = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];
-    document.getElementById('topbar-date').textContent =
-        days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-    document.getElementById('footer-year').textContent = now.getFullYear();
-</script>
 
 </body>
 </html>
